@@ -14,7 +14,7 @@
   "activationEvents": [
     "onCommand:sizer.helloWorld"
   ],
-  "main": "./out/extension.js",
+  "main": "./build/sizer.js",
   "contributes": {
     "commands": [
       {
@@ -145,17 +145,43 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "webpack": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} webpack --config webpack.config.ts --progress",
+    "webpack:watch": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} webpack --config webpack.config.ts --watch --mode=development"
+  },
+  "dependencies": {
+    "typescript": "^3.3.1"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
     "@types/mocha": "^5.2.6",
     "@types/node": "^10.12.21",
+    "@types/terser-webpack-plugin": "^1.2.1",
     "@types/vscode": "^1.36.0",
+    "@types/webpack": "^4.32.1",
+    "@types/webpack-bundle-analyzer": "^2.13.2",
+    "@types/webpack-merge": "^4.1.5",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^5.2.0",
     "glob": "^7.1.4",
     "mocha": "^6.1.4",
-    "typescript": "^3.3.1",
-    "tslint": "^5.12.1",
-    "vscode-test": "^1.0.2"
+    "source-map-loader": "^0.2.4",
+    "source-map-support": "^0.5.12",
+    "terser-webpack-plugin": "1.3.0",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "tslint-react": "^4.0.0",
+    "vscode-test": "^1.0.2",
+    "webpack": "^4.38.0",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^3.3.6",
+    "webpack-merge": "^4.2.1"
+  },
+  "peerDependencies": {
+    "vscode": "^1.1.35"
   }
 }

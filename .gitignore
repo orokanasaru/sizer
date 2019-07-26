@@ -1,5 +1,7 @@
-out
-node_modules
+.history
 .vscode-test/
 *.vsix
-.history
+build
+dist
+lib
+node_modules
