@@ -135,13 +135,17 @@
           },
           "default": [
             {
-              "name": "default"
+              "name": "default",
+              "typeScript": {
+                "jsx": "react"
+              }
             },
             {
               "name": "ESNext",
               "typeScript": {
                 "module": "ESNext",
-                "target": "ESNext"
+                "target": "ESNext",
+                "jsx": "react"
               }
             }
           ]

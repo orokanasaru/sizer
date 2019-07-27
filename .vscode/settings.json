@@ -22,5 +22,7 @@
     "statusBar.background": "#22e2a1",
     "statusBarItem.hoverBackground": "#18b982",
     "statusBar.foreground": "#15202b"
-  }
+  },
+  "autoimport.useSemiColon": false,
+  "autoimport.filesToScan": "src/**/*.{ts,tsx}"
 }

@@ -1,8 +1,10 @@
-import { writeOutput } from './output'
-import { getCurrentConfiguration } from './settings'
+import { commands, Disposable } from 'vscode'
+
+import { clearOutput, writeOutput } from './output'
+import { changePreset, getCurrentConfiguration } from './settings'
 import { transpile } from './transpile'
 
-export const testTranspile = () => {
+const testTranspile = () => {
   {
     const { outputText } = transpile(
       `
@@ -15,6 +17,17 @@ export const testTranspile = () => {
       getCurrentConfiguration().typeScript
     )
 
+    clearOutput()
     writeOutput(outputText)
   }
+}
+
+export const registerCommands = (subscriptions: Disposable[]) => {
+  subscriptions.push(
+    commands.registerCommand('sizer.helloWorld', testTranspile)
+  )
+
+  subscriptions.push(
+    commands.registerCommand('sizer.changePreset', changePreset)
+  )
 }
