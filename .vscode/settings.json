@@ -8,9 +8,8 @@
     "**/dist": true,
     "**/lib": true
   },
-  "typescript.tsc.autoDetect": "off",
   "workbench.colorCustomizations": {
-    "activityBar.background": "#4fe8b4",
+    "activityBar.background": "#1fe8b4",
     "activityBar.foreground": "#15202b",
     "activityBar.inactiveForeground": "#15202b99",
     "activityBarBadge.background": "#b756e9",
@@ -22,7 +21,5 @@
     "statusBar.background": "#22e2a1",
     "statusBarItem.hoverBackground": "#18b982",
     "statusBar.foreground": "#15202b"
-  },
-  "autoimport.useSemiColon": false,
-  "autoimport.filesToScan": "src/**/*.{ts,tsx}"
+  }
 }

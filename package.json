@@ -12,7 +12,10 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact"
   ],
   "main": "./build/sizer.js",
   "contributes": {
@@ -154,21 +157,13 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile",
-    "test": "node ./out/test/runTest.js",
     "webpack": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} webpack --config webpack.config.ts --progress",
     "webpack:watch": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} webpack --config webpack.config.ts --watch --mode=development"
   },
-  "dependencies": {
-    "typescript": "^3.3.1"
-  },
   "devDependencies": {
     "@types/glob": "^7.1.1",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^10.12.21",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.6.8",
     "@types/terser-webpack-plugin": "^1.2.1",
     "@types/vscode": "^1.36.0",
     "@types/webpack": "^4.32.1",
@@ -177,7 +172,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "cross-env": "^5.2.0",
     "glob": "^7.1.4",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.12",
     "terser-webpack-plugin": "1.3.0",
@@ -188,6 +183,7 @@
     "tslint-config-standard": "^8.0.1",
     "tslint-microsoft-contrib": "^6.2.0",
     "tslint-react": "^4.0.0",
+    "typescript": "beta",
     "vscode-test": "^1.0.2",
     "webpack": "^4.38.0",
     "webpack-bundle-analyzer": "^3.3.2",
@@ -195,6 +191,8 @@
     "webpack-merge": "^4.2.1"
   },
   "peerDependencies": {
+    "terser": "^4.1.2",
+    "typescript": "beta",
     "vscode": "^1.1.35"
   }
 }
