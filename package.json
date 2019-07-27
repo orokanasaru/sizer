@@ -12,18 +12,27 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:sizer.helloWorld"
+    "*"
   ],
   "main": "./build/sizer.js",
   "contributes": {
     "commands": [
       {
+        "command": "sizer.changePreset",
+        "title": "Sizer: Change Preset"
+      },
+      {
         "command": "sizer.helloWorld",
-        "title": "Hello World"
+        "title": "Sizer: Hello World"
       }
     ],
     "configuration": {
       "properties": {
+        "sizer.preset": {
+          "description": "The preset to use",
+          "type": "string",
+          "default": "default"
+        },
         "sizer.presets": {
           "description": "Enables rapid switching between presets",
           "type": "array",
@@ -34,7 +43,7 @@
                 "description": "The name of the preset",
                 "type": "string"
               },
-              "TypeScript": {
+              "typeScript": {
                 "description": "Options for the TypeScript compiler",
                 "type": "object",
                 "properties": {
@@ -130,7 +139,7 @@
             },
             {
               "name": "ESNext",
-              "TypeScript": {
+              "typeScript": {
                 "module": "ESNext",
                 "target": "ESNext"
               }

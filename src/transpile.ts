@@ -1,6 +1,6 @@
 import { CompilerOptions, transpileModule } from 'typescript'
 
-export type Options = Pick<
+export type TypeScriptOptions = Pick<
   CompilerOptions,
   | 'allowSyntheticDefaultImports'
   | 'downlevelIteration'
@@ -16,7 +16,7 @@ export type Options = Pick<
   | 'target'
 >
 
-export const transpile = (input: string, options: Options) => {
+export const transpile = (input: string, options: TypeScriptOptions) => {
   const { diagnostics, outputText } = transpileModule(input, {
     compilerOptions: options
   })

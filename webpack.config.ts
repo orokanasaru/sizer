@@ -27,7 +27,7 @@ const disableConcatenation: Configuration = {
 
 const getCommonConfig = (mode: Configuration['mode']): Configuration => ({
   entry: { sizer: './src/sizer.ts' },
-  externals: { vscode: 'commonjs vscode' },
+  externals: { typescript: 'commonjs typescript', vscode: 'commonjs vscode' },
   mode,
   module: {
     rules: [

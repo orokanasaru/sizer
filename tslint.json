@@ -8,7 +8,7 @@
   ],
   "rules": {
     "array-type": [true, "array"],
-    "await-promise": [true, "PromiseLike"],
+    "await-promise": [true, "PromiseLike", "Thenable"],
     "binary-expression-operand-order": true,
     "completed-docs": false,
     "cyclomatic-complexity": true,
