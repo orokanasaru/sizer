@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs'
+import { Observable, of, Subject } from 'rxjs'
 import {
   ConfigurationChangeEvent,
   Disposable,
@@ -13,6 +13,7 @@ export type Events = Readonly<{
   activeEditor$: Observable<TextEditor | undefined>
   configuration$: Observable<ConfigurationChangeEvent>
   document$: Observable<TextDocumentChangeEvent>
+  start$: Observable<true>
   textSelection$: Observable<TextEditorSelectionChangeEvent>
 }>
 
@@ -38,6 +39,7 @@ export const initializeEvents = (dispose: Disposable[]) => {
     activeEditor$: eventToObservable(window.onDidChangeActiveTextEditor),
     configuration$: eventToObservable(workspace.onDidChangeConfiguration),
     document$: eventToObservable(workspace.onDidChangeTextDocument),
+    start$: of(true),
     textSelection$: eventToObservable(window.onDidChangeTextEditorSelection)
   }
 

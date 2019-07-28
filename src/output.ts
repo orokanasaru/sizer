@@ -29,5 +29,4 @@ export const initializeOutput = (subscriptions: Disposable[]) => {
   subscriptions.push(window.onDidChangeActiveTextEditor(setLanguage))
 
   outputChannel = window.createOutputChannel('Sizer')
-  clearOutput()
 }

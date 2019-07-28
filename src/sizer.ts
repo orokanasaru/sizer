@@ -12,7 +12,7 @@ import { transpile } from './transpile'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate({ subscriptions }: ExtensionContext) {
+export const activate = ({ subscriptions }: ExtensionContext) => {
   registerCommands(subscriptions)
   initializeOutput(subscriptions)
 
@@ -30,4 +30,4 @@ export function activate({ subscriptions }: ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export const deactivate = () => undefined

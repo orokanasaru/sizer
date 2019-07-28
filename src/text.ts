@@ -6,7 +6,7 @@ import {
   map,
   switchMap
 } from 'rxjs/operators'
-import { Selection, TextDocument, TextEditor } from 'vscode'
+import { Selection, TextDocument, TextEditor, window } from 'vscode'
 
 import { Events } from './events'
 
@@ -29,14 +29,17 @@ const getSelectedText = (
 export const getRelevantText = ({
   activeEditor$,
   document$,
+  start$,
   textSelection$
-}: Pick<Events, 'activeEditor$' | 'document$' | 'textSelection$'>) =>
-  activeEditor$.pipe(
+}: Events) =>
+  merge(start$.pipe(map(() => window.activeTextEditor)), activeEditor$).pipe(
     switchMap(e =>
       isEditorRelevant(e)
         ? combineLatest([
             of(e!.document),
             merge(
+              // kick off for on start scenario
+              of(getSelectedText(e!.selections, e!)),
               document$.pipe(
                 // gets fired when writing to log
                 filter(d => isDocumentRelevant(d.document)),
