@@ -23,10 +23,6 @@
       {
         "command": "sizer.changePreset",
         "title": "Sizer: Change Preset"
-      },
-      {
-        "command": "sizer.helloWorld",
-        "title": "Sizer: Hello World"
       }
     ],
     "configuration": {

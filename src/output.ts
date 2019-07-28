@@ -1,4 +1,7 @@
-import { Disposable, languages, OutputChannel, window } from 'vscode'
+import { merge } from 'rxjs'
+import { languages, OutputChannel, window } from 'vscode'
+
+import { Events } from './events'
 
 let outputChannel: OutputChannel | undefined
 
@@ -25,8 +28,8 @@ const setLanguage = async () => {
   }
 }
 
-export const initializeOutput = (subscriptions: Disposable[]) => {
-  subscriptions.push(window.onDidChangeActiveTextEditor(setLanguage))
+export const initializeOutput = ({ activeEditor$, start$ }: Events) => {
+  merge(start$, activeEditor$).subscribe(setLanguage)
 
   outputChannel = window.createOutputChannel('Sizer')
 }
