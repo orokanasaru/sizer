@@ -1,7 +1,12 @@
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import path from 'path'
 import TerserPlugin from 'terser-webpack-plugin'
-import { BannerPlugin, Configuration, DefinePlugin } from 'webpack'
+import {
+  BannerPlugin,
+  Configuration,
+  DefinePlugin,
+  NormalModuleReplacementPlugin
+} from 'webpack'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import webpackMerge from 'webpack-merge'
 
@@ -9,6 +14,8 @@ type EnvironmentOptions = {
   analyze?: boolean
   disableConcatenation?: boolean
 }
+
+type Resource = { request: string }
 
 const analysis: Configuration = {
   plugins: [
@@ -61,6 +68,9 @@ const getCommonConfig = (mode: Configuration['mode']): Configuration => ({
       banner: 'require("source-map-support").install();',
       entryOnly: false,
       raw: true
+    }),
+    new NormalModuleReplacementPlugin(/rxjs/, (resource: Resource) => {
+      resource.request = resource.request.replace(/rxjs/, 'rxjs/_esm2015')
     })
   ],
   resolve: {
