@@ -1,5 +1,9 @@
+dependencies:
+  lodash-es: 4.17.15
+  rxjs: 6.5.2
 devDependencies:
   '@types/glob': 7.1.1
+  '@types/lodash-es': 4.17.3
   '@types/mocha': 5.2.7
   '@types/node': 12.6.8
   '@types/terser-webpack-plugin': 1.2.1
@@ -11,7 +15,6 @@ devDependencies:
   cross-env: 5.2.0
   glob: 7.1.4
   mocha: 6.2.0
-  rxjs: 6.5.2
   source-map-loader: 0.2.4
   source-map-support: 0.5.12
   terser: 4.1.2
@@ -61,6 +64,16 @@ packages:
     dev: true
     resolution:
       integrity: sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
+  /@types/lodash-es/4.17.3:
+    dependencies:
+      '@types/lodash': 4.14.136
+    dev: true
+    resolution:
+      integrity: sha512-iHI0i7ZAL1qepz1Y7f3EKg/zUMDwDfTzitx+AlHhJJvXwenP682ZyGbgPSc5Ej3eEAKVbNWKFuwOadCj5vBbYQ==
+  /@types/lodash/4.14.136:
+    dev: true
+    resolution:
+      integrity: sha512-0GJhzBdvsW2RUccNHOBkabI8HZVdOXmXbXhuKlDEd5Vv12P7oAVGfomGp3Ne21o5D/qu1WmthlNKFaoZJJeErA==
   /@types/minimatch/3.0.3:
     dev: true
     resolution:
@@ -2193,6 +2206,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==
+  /lodash-es/4.17.15:
+    dev: false
+    resolution:
+      integrity: sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
   /lodash/4.17.15:
     dev: true
     resolution:
@@ -3083,7 +3100,7 @@ packages:
   /rxjs/6.5.2:
     dependencies:
       tslib: 1.10.0
-    dev: true
+    dev: false
     engines:
       npm: '>=2.0.0'
     resolution:
@@ -3596,7 +3613,6 @@ packages:
     resolution:
       integrity: sha512-dyNS/RqyVTDcmNM4NIBAeDMpsAdaQ+ojdf0GOLqE6nwJOgzEkdRNzJywhDfwnuvB10oa6NLVG1rUJQCpRN7qoQ==
   /tslib/1.10.0:
-    dev: true
     resolution:
       integrity: sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
   /tslib/1.9.0:
@@ -4094,6 +4110,7 @@ packages:
       integrity: sha512-kKfnnYkbTfrAdd0xICNFw7Atm8nKpLcLv9AZGEt+kczL/WQVai4e2V6ZN8U/O+iI6WrNuJjNNOyu4zfhl9D3Hg==
 specifiers:
   '@types/glob': ^7.1.1
+  '@types/lodash-es': ^4.17.3
   '@types/mocha': ^5.2.7
   '@types/node': ^12.6.8
   '@types/terser-webpack-plugin': ^1.2.1
@@ -4104,6 +4121,7 @@ specifiers:
   clean-webpack-plugin: ^3.0.0
   cross-env: ^5.2.0
   glob: ^7.1.4
+  lodash-es: ^4.17.11
   mocha: ^6.2.0
   rxjs: ^6.5.2
   source-map-loader: ^0.2.4

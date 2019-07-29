@@ -443,8 +443,13 @@
     "webpack": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} webpack --config webpack.config.ts --progress",
     "webpack:watch": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} webpack --config webpack.config.ts --watch --mode=development"
   },
+  "dependencies": {
+    "lodash-es": "^4.17.11",
+    "rxjs": "^6.5.2"
+  },
   "devDependencies": {
     "@types/glob": "^7.1.1",
+    "@types/lodash-es": "^4.17.3",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.6.8",
     "@types/terser-webpack-plugin": "^1.2.1",
@@ -456,7 +461,6 @@
     "cross-env": "^5.2.0",
     "glob": "^7.1.4",
     "mocha": "^6.2.0",
-    "rxjs": "^6.5.2",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.12",
     "terser": "^4.1.2",

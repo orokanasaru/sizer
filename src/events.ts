@@ -1,5 +1,6 @@
 import { Observable, of, Subject } from 'rxjs'
 import {
+  commands,
   ConfigurationChangeEvent,
   Disposable,
   TextDocumentChangeEvent,
@@ -11,9 +12,10 @@ import {
 
 export type Events = Readonly<{
   activeEditor$: Observable<TextEditor | undefined>
+  changePreset$: Observable<unknown>
   configuration$: Observable<ConfigurationChangeEvent>
   document$: Observable<TextDocumentChangeEvent>
-  start$: Observable<true>
+  start$: Observable<unknown>
   textSelection$: Observable<TextEditorSelectionChangeEvent>
 }>
 
@@ -24,6 +26,13 @@ export const getEvents = () => events
 export const initializeEvents = (dispose: Disposable[]) => {
   if (events) {
     return events
+  }
+
+  const commandToObservable = (command: string): Observable<unknown> => {
+    const subject = new Subject()
+    dispose.push(commands.registerCommand(command, () => subject.next(true)))
+
+    return subject
   }
 
   const eventToObservable = <T>(
@@ -37,6 +46,7 @@ export const initializeEvents = (dispose: Disposable[]) => {
 
   events = {
     activeEditor$: eventToObservable(window.onDidChangeActiveTextEditor),
+    changePreset$: commandToObservable('sizer.changePreset'),
     configuration$: eventToObservable(workspace.onDidChangeConfiguration),
     document$: eventToObservable(workspace.onDidChangeTextDocument),
     start$: of(true),
