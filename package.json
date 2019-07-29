@@ -42,6 +42,296 @@
                 "description": "The name of the preset",
                 "type": "string"
               },
+              "terser": {
+                "description": "Options for minifying with Terser",
+                "type": "object",
+                "properties": {
+                  "compress": {
+                    "description": "pass false to skip compressing entirely. Pass an object to specify custom compress options.",
+                    "properties": {
+                      "arrows": {
+                        "description": "Converts ()=>{return x} to ()=>x. Class and object literal methods will also be converted to arrow expressions if the resultant code is shorter: m(){return x} becomes m:()=>x.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "arguments": {
+                        "description": "replace arguments[index] with function parameter name whenever possible.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "booleans": {
+                        "description": "various optimizations for boolean context, for example !!a ? b : c → a ? b : c",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "booleans_as_integers": {
+                        "description": "Turn booleans into 0 and 1, also makes comparisons with booleans use == and != instead of === and !==.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "collapse_vars": {
+                        "description": "Collapse single-use non-constant variables, side effects permitting.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "comparisons": {
+                        "description": "apply certain optimizations to binary nodes, e.g. !(a <= b) → a > b (only when unsafe_comps), attempts to negate binary nodes, e.g. a = !b && !c && !d && !e → a=!(b||c||d||e) etc.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "computed_props": {
+                        "description": "Transforms constant computed properties into regular ones: {['computed']: 1} is converted to {computed: 1}.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "conditionals": {
+                        "description": "apply optimizations for if-s and conditional expressions",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "dead_code": {
+                        "description": "remove unreachable code",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "defaults": {
+                        "description": "Pass false to disable most default enabled compress transforms. Useful when you only want to enable a few compress options while disabling the rest.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "directives": {
+                        "description": "remove redundant or non-standard directives",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "drop_console": {
+                        "description": "Pass true to discard calls to console.* functions. If you wish to drop a specific function call such as console.info and/or retain side effects from function arguments after dropping the function call then use pure_funcs instead.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "drop_debugger": {
+                        "description": "remove debugger; statements",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "ecma": {
+                        "description": "Pass 6 or greater to enable compress options that will transform ES5 code into smaller ES6+ equivalent forms.",
+                        "type": "number",
+                        "enum": [
+                          5,
+                          6,
+                          7,
+                          8,
+                          9
+                        ],
+                        "default": 5
+                      },
+                      "evaluate": {
+                        "description": "attempt to evaluate constant expressions",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "expression": {
+                        "description": "Pass true to preserve completion values from terminal statements without return, e.g. in bookmarklets.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "global_defs": {
+                        "description": "see https://github.com/terser-js/terser/#conditional-compilation",
+                        "type": "object",
+                        "default": {}
+                      },
+                      "hoist_funs": {
+                        "description": "hoist function declarations",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "hoist_props": {
+                        "description": "hoist properties from constant object and array literals into regular variables subject to a set of constraints. For example: var o={p:1, q:2}; f(o.p, o.q); is converted to f(1, 2);. Note: hoist_props works best with mangle enabled, the compress option passes set to 2 or higher, and the compress option toplevel enabled.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "hoist_vars": {
+                        "description": "hoist var declarations (this is false by default because it seems to increase the size of the output in general)",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "if_return": {
+                        "description": "optimizations for if/return and if/continue",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "inline": {
+                        "description": "inline calls to function with simple/return statement: \nfalse -- same as 0\n0 -- disabled inlining\n1 -- inline simple functions\n2 -- inline functions with arguments\n3 -- inline functions with arguments and variables\ntrue -- same as 3",
+                        "enum": [
+                          false,
+                          0,
+                          1,
+                          2,
+                          3,
+                          true
+                        ],
+                        "default": true
+                      },
+                      "join_vars": {
+                        "description": "join consecutive var statements",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "keep_classnames": {
+                        "description": "Pass true to prevent the compressor from discarding class names. Pass a regular expression to only keep class names matching that regex. See also: the keep_classnames mangle option.",
+                        "default": false
+                      },
+                      "keep_fargs": {
+                        "description": "Prevents the compressor from discarding unused function arguments. You need this for code which relies on Function.length.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "keep_fnames": {
+                        "description": "Pass true to prevent the compressor from discarding function names. Pass a regular expression to only keep function names matching that regex. Useful for code relying on Function.prototype.name. See also: the keep_fnames mangle option.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "keep_infinity": {
+                        "description": "Pass true to prevent Infinity from being compressed into 1/0, which may cause performance issues on Chrome.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "loops": {
+                        "description": "optimizations for do, while and for loops when we can statically determine the condition.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "module": {
+                        "description": "Pass true when compressing an ES6 module. Strict mode is implied and the toplevel option as well.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "negate_iife": {
+                        "description": "negate 'Immediately-Called Function Expressions' where the return value is discarded, to avoid the parens that the code generator would insert.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "passes": {
+                        "description": "The maximum number of times to run compress. In some cases more than one pass leads to further compressed code. Keep in mind more passes will take more time.",
+                        "type": "number",
+                        "default": 1
+                      },
+                      "properties": {
+                        "description": "rewrite property access using the dot notation, for example foo['bar'] → foo.bar",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "pure_funcs": {
+                        "description": "You can pass an array of names and Terser will assume that those functions do not produce side effects. DANGER: will not check if the name is redefined in scope. An example case here, for instance var q = Math.floor(a/b). If variable q is not used elsewhere, Terser will drop it, but will still keep the Math.floor(a/b), not knowing what it does. You can pass pure_funcs: [ 'Math.floor' ] to let it know that this function won't produce any side effect, in which case the whole statement would get discarded. The current implementation adds some overhead (compression will be slower).",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": null
+                      },
+                      "pure_getters": {
+                        "description": "If you pass true for this, Terser will assume that object property access (e.g. foo.bar or foo['bar']) doesn't have any side effects. Specify 'strict' to treat foo.bar as side-effect-free only when foo is certain to not throw, i.e. not null or undefined.",
+                        "enum": [
+                          true,
+                          "strict",
+                          false
+                        ],
+                        "default": "strict"
+                      },
+                      "reduce_funcs": {
+                        "description": "Allows single-use functions to be inlined as function expressions when permissible allowing further optimization. Enabled by default. Option depends on reduce_vars being enabled. Some code runs faster in the Chrome V8 engine if this option is disabled. Does not negatively impact other major browsers.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "reduce_vars": {
+                        "description": "Improve optimization on variables assigned with and used as constant values.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "sequences": {
+                        "description": "join consecutive simple statements using the comma operator. May be set to a positive integer to specify the maximum number of consecutive comma sequences that will be generated. If this option is set to true then the default sequences limit is 200. Set option to false or 0 to disable. The smallest sequences length is 2. A sequences value of 1 is grandfathered to be equivalent to true and as such means 200. On rare occasions the default sequences limit leads to very slow compress times in which case a value of 20 or less is recommended.",
+                        "default": true
+                      },
+                      "side_effects": {
+                        "description": "Pass false to disable potentially dropping functions marked as 'pure'. A function call is marked as 'pure' if a comment annotation /*@__PURE__*/ or /*#__PURE__*/ immediately precedes the call. For example: /*@__PURE__*/foo();",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "switches": {
+                        "description": "de-duplicate and remove unreachable switch branches",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "toplevel": {
+                        "description": "drop unreferenced functions ('funcs') and/or variables ('vars') in the top level scope (false by default, true to drop both unreferenced functions and variables)",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "top_retain": {
+                        "description": "prevent specific toplevel functions and variables from unused removal (can be array, comma-separated, RegExp or function. Implies toplevel)",
+                        "default": null
+                      },
+                      "typeofs": {
+                        "description": "Transforms typeof foo == 'undefined' into foo === void 0. Note: recommend to set this value to false for IE10 and earlier versions due to known issues.",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "unsafe": {
+                        "description": "apply 'unsafe' transformations https://github.com/terser-js/terser/#the-unsafe-compress-option",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_arrows": {
+                        "description": "Convert ES5 style anonymous function expressions to arrow functions if the function body does not reference this. Note: it is not always safe to perform this conversion if code relies on the the function having a prototype, which arrow functions lack. This transform requires that the ecma compress option is set to 6 or greater.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_comps": {
+                        "description": "Reverse < and <= to > and >= to allow improved compression. This might be unsafe when an at least one of two operands is an object with computed values due the use of methods like get, or valueOf. This could cause change in execution order after operands in the comparison are switching. Compression only works if both comparisons and unsafe_comps are both set to true.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_Function": {
+                        "description": "compress and mangle Function(args, code) when both args and code are string literals.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_math": {
+                        "description": "optimize numerical expressions like 2 * x * 3 into 6 * x, which may give imprecise floating point results.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_methods": {
+                        "description": "Converts { m: function(){} } to { m(){} }. ecma must be set to 6 or greater to enable this transform. If unsafe_methods is a RegExp then key/value pairs with keys matching the RegExp will be converted to concise methods. Note: if enabled there is a risk of getting a '<method name> is not a constructor' TypeError should any code try to new the former function.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_proto": {
+                        "description": "optimize expressions like Array.prototype.slice.call(a) into [].slice.call(a)",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_regexp": {
+                        "description": "enable substitutions of variables with RegExp values the same way as if they are constants.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unsafe_undefined": {
+                        "description": "substitute void 0 if there is a variable named undefined in scope (variable name will be mangled, typically reduced to a single character)",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "unused": {
+                        "description": "drop unreferenced functions and variables (simple direct variable assignments do not count as references unless set to 'keep_assign')",
+                        "type": "boolean",
+                        "default": true
+                      }
+                    },
+                    "default": {}
+                  }
+                }
+              },
               "typeScript": {
                 "description": "Options for the TypeScript compiler",
                 "type": "object",
@@ -73,7 +363,6 @@
                   },
                   "jsx": {
                     "description": "Support JSX in .tsx files: 'react', 'preserve', 'react-native'. See JSX.",
-                    "type": "string",
                     "enum": [
                       "preserve",
                       "react",
@@ -88,7 +377,6 @@
                   },
                   "module": {
                     "description": "Specify module code generation: 'None', 'CommonJS', 'AMD', 'System', 'UMD', 'ES6', 'ES2015' or 'ESNext'. Only 'AMD' and 'System' can be used in conjunction with --outFile. 'ES6' and 'ES2015' values may be used when targeting 'ES5' or lower.",
-                    "type": "string",
                     "enum": [
                       "None",
                       "CommonJS",
@@ -113,7 +401,6 @@
                   },
                   "target": {
                     "description": "Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017' or 'ESNext'. Note: 'ESNext' targets latest supported ES proposed features.",
-                    "type": "string",
                     "enum": [
                       "ES3",
                       "ES5",
@@ -172,6 +459,7 @@
     "rxjs": "^6.5.2",
     "source-map-loader": "^0.2.4",
     "source-map-support": "^0.5.12",
+    "terser": "^4.1.2",
     "terser-webpack-plugin": "1.3.0",
     "ts-loader": "^6.0.4",
     "ts-node": "^8.3.0",

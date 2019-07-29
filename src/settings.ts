@@ -1,15 +1,17 @@
 import { combineLatest, merge, Subject } from 'rxjs'
 import { distinctUntilChanged, map } from 'rxjs/operators'
+import { MinifyOptions } from 'terser'
+import { CompilerOptions } from 'typescript'
 import { window, workspace } from 'vscode'
 
 import { Events } from './events'
-import { TypeScriptOptions } from './transpile'
 
 type SizerConfiguration = {
   preset: string
   presets: {
     name: string
-    typeScript: TypeScriptOptions
+    terser: MinifyOptions
+    typeScript: CompilerOptions
   }[]
 }
 
@@ -32,6 +34,9 @@ export const changePreset = async () =>
     })
   )
 
+export const jsonEqual = <T>(l: T, r: T) =>
+  JSON.stringify(l) === JSON.stringify(r)
+
 export const getConfig = ({ configuration$, start$ }: Events) =>
   combineLatest([
     merge(
@@ -44,5 +49,6 @@ export const getConfig = ({ configuration$, start$ }: Events) =>
     merge(start$, configuration$).pipe(map(getPresets))
   ]).pipe(
     map(([preset, presets]) => presets.filter(p => p.name === preset)[0]),
-    distinctUntilChanged((p, n) => JSON.stringify(p) === JSON.stringify(n))
+    // somehow has a circular reference
+    distinctUntilChanged(jsonEqual)
   )
