@@ -189,7 +189,6 @@
                       },
                       "keep_fnames": {
                         "description": "Pass true to prevent the compressor from discarding function names. Pass a regular expression to only keep function names matching that regex. Useful for code relying on Function.prototype.name. See also: the keep_fnames mangle option.",
-                        "type": "boolean",
                         "default": false
                       },
                       "keep_infinity": {
@@ -329,6 +328,257 @@
                       }
                     },
                     "default": {}
+                  },
+                  "ecma": {
+                    "description": "pass 5, 6, 7 or 8 to override parse, compress and output options.",
+                    "enum": [
+                      5,
+                      6,
+                      7,
+                      8,
+                      9
+                    ]
+                  },
+                  "ie8": {
+                    "description": "set to true to support IE8.",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "keep_classnames": {
+                    "description": "pass true to prevent discarding or mangling of class names. Pass a regular expression to only keep class names matching that regex."
+                  },
+                  "keep_fnames": {
+                    "description": "pass true to prevent discarding or mangling of function names. Pass a regular expression to only keep class names matching that regex. Useful for code relying on Function.prototype.name. If the top level minify option keep_classnames is undefined it will be overridden with the value of the top level minify option keep_fnames.",
+                    "default": false
+                  },
+                  "mangle": {
+                    "description": "pass false to skip mangling names, or pass an object to specify mangle options",
+                    "properties": {
+                      "eval": {
+                        "description": "Pass true to mangle names visible in scopes where eval or with are used.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "keep_classnames": {
+                        "description": "Pass true to not mangle class names. Pass a regular expression to only keep class names matching that regex. See also: the keep_classnames compress option.",
+                        "default": false
+                      },
+                      "keep_fnames": {
+                        "description": "Pass true to not mangle function names. Pass a regular expression to only keep class names matching that regex. Useful for code relying on Function.prototype.name. See also: the keep_fnames compress option.",
+                        "default": false
+                      },
+                      "module": {
+                        "description": "Pass true when minifying an ES6 modules, where the toplevel scope is not the global scope. Implies toplevel.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "properties": {
+                        "description": "a subcategory of the mangle option. Pass an object to specify custom mangle property options.",
+                        "properties": {
+                          "builtins": {
+                            "description": "Use true to allow the mangling of builtin DOM properties. Not recommended to override this setting.",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "debug": {
+                            "description": "Mangle names with the original name still present. Pass an empty string '' to enable, or a non-empty string to set the debug suffix.",
+                            "default": false
+                          },
+                          "keep_quoted": {
+                            "description": "Only mangle unquoted property names.\n\ntrue -- Quoted property names are automatically reserved and any unquoted property names will not be mangled.\n'strict' -- Advanced, all unquoted property names are mangled unless explicitly reserved.",
+                            "enum": [
+                              false,
+                              "strict",
+                              true
+                            ],
+                            "default": false
+                          },
+                          "regex": {
+                            "description": "Pass a RegExp literal or pattern string to only mangle property matching the regular expression.",
+                            "type": "string",
+                            "default": null
+                          },
+                          "reserved": {
+                            "description": "Do not mangle property names listed in the reserved array.",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "default": []
+                          }
+                        },
+                        "default": false
+                      },
+                      "reserved": {
+                        "description": "Pass an array of identifiers that should be excluded from mangling. Example: ['foo', 'bar'].",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "default": []
+                      },
+                      "safari10": {
+                        "description": "Pass true to work around the Safari 10 loop iterator bug 'Cannot declare a let variable twice'. See also: the safari10 output option.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "toplevel": {
+                        "description": "Pass true to mangle names declared in the top level scope.",
+                        "type": "boolean",
+                        "default": false
+                      }
+                    },
+                    "default": true
+                  },
+                  "module": {
+                    "description": "Use when minifying an ES6 module. 'use strict' is implied and names can be mangled on the top scope. If compress or mangle is enabled then the toplevel option will be enabled.",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "output": {
+                    "description": "pass an object if you wish to specify additional output options. The defaults are optimized for best compression.",
+                    "properties": {
+                      "ascii_only": {
+                        "description": "escape Unicode characters in strings and regexps (affects directives with non-ascii characters becoming invalid)",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "beautify": {
+                        "description": "whether to actually beautify the output. Passing -b will set this to true, but you might need to pass -b even when you want to generate minified code, in order to specify additional arguments, so you can use -b beautify=false to override it.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "braces": {
+                        "description": "always insert braces in if, for, do, while or with statements, even if their body is a single statement.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "comments": {
+                        "description": "pass true or 'all' to preserve all comments, 'some' to preserve some comments, a regular expression string (e.g. /^!/) or a function.",
+                        "default": false
+                      },
+                      "ecma": {
+                        "description": "set output printing mode. Set ecma to 6 or greater to emit shorthand object properties - i.e.: {a} instead of {a: a}. The ecma option will only change the output in direct control of the beautifier. Non-compatible features in the abstract syntax tree will still be output as is. For example: an ecma setting of 5 will not convert ES6+ code to ES5.",
+                        "enum": [
+                          5,
+                          6,
+                          7,
+                          8,
+                          9
+                        ],
+                        "default": 5
+                      },
+                      "indent_level": {
+                        "type": "number",
+                        "default": 4
+                      },
+                      "indent_start": {
+                        "description": "prefix all lines by that many spaces",
+                        "type": "number",
+                        "default": 0
+                      },
+                      "inline_script": {
+                        "description": "escape HTML comments and the slash in occurrences of </script> in strings",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "keep_quoted_props": {
+                        "description": "when turned on, prevents stripping quotes from property names in object literals.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "max_line_len": {
+                        "description": "maximum line length (for minified code)",
+                        "default": false
+                      },
+                      "preamble": {
+                        "description": "when passed it must be a string and it will be prepended to the output literally. The source map will adjust for this text. Can be used to insert a comment containing licensing information, for example.",
+                        "default": null
+                      },
+                      "quote_keys": {
+                        "description": "pass true to quote all keys in literal objects",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "quote_style": {
+                        "description": "preferred quote style for strings (affects quoted property names and directives as well):\n\n0 -- prefers double quotes, switches to single quotes when there are more double quotes in the string itself. 0 is best for gzip size.\n1 -- always use single quotes\n2 -- always use double quotes\n3 -- always use the original quotes",
+                        "enum": [
+                          0,
+                          1,
+                          2,
+                          3
+                        ],
+                        "default": 0
+                      },
+                      "safari10": {
+                        "description": "set this option to true to work around the Safari 10/11 await bug. See also: the safari10 mangle option.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "semicolons": {
+                        "description": "separate statements with semicolons. If you pass false then whenever possible we will use a newline instead of a semicolon, leading to more readable output of minified code (size before gzip could be smaller; size after gzip insignificantly larger).",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "shebang": {
+                        "description": "preserve shebang #! in preamble (bash scripts)",
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "webkit": {
+                        "description": "enable workarounds for WebKit bugs. PhantomJS users should set this option to true.",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "wrap_iife": {
+                        "description": "pass true to wrap immediately invoked function expressions. See https://github.com/mishoo/UglifyJS2/issues/640 for more details.",
+                        "type": "boolean",
+                        "default": false
+                      }
+                    },
+                    "default": null
+                  },
+                  "parse": {
+                    "description": "pass an object if you wish to specify some additional parse options",
+                    "type": "object",
+                    "properties": {
+                      "bare_returns": {
+                        "description": "support top level return statements",
+                        "type": "boolean",
+                        "default": false
+                      },
+                      "ecma": {
+                        "description": "specify one of 5, 6, 7 or 8. Note: this setting is not presently enforced except for ES8 optional trailing commas in function parameter lists and calls with ecma 8.",
+                        "enum": [
+                          5,
+                          6,
+                          7,
+                          8,
+                          9
+                        ],
+                        "default": 8
+                      },
+                      "html5_comments": {
+                        "type": "boolean",
+                        "default": true
+                      },
+                      "shebang": {
+                        "description": "support #!command as the first line",
+                        "type": "boolean",
+                        "default": true
+                      }
+                    },
+                    "default": {}
+                  },
+                  "safari10": {
+                    "description": "pass true to work around Safari 10/11 bugs in loop scoping and await. See safari10 options in mangle and output for details.",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "toplevel": {
+                    "description": "set to true if you wish to enable top level variable and function name mangling and to drop unused variables and functions.",
+                    "type": "boolean",
+                    "default": false
                   }
                 }
               },
