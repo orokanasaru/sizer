@@ -6,11 +6,11 @@ import {
   map,
   switchMap
 } from 'rxjs/operators'
-import { Selection, TextDocument, TextEditor, window } from 'vscode'
+import { Selection, TextDocument, TextEditor } from 'vscode'
 
 import { Events } from './events'
 
-const isEditorRelevant = (editor: TextEditor | undefined) =>
+export const isEditorRelevant = (editor: TextEditor | undefined) =>
   editor !== undefined && isDocumentRelevant(editor.document)
 
 const isDocumentRelevant = (document: TextDocument) =>
@@ -29,10 +29,9 @@ const getSelectedText = (
 export const getRelevantText = ({
   activeEditor$,
   document$,
-  start$,
   textSelection$
 }: Events) =>
-  merge(start$.pipe(map(() => window.activeTextEditor)), activeEditor$).pipe(
+  activeEditor$.pipe(
     switchMap(e =>
       isEditorRelevant(e)
         ? combineLatest([

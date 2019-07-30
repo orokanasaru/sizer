@@ -1,4 +1,4 @@
-import { Observable, of, Subject } from 'rxjs'
+import { merge, Observable, of, Subject } from 'rxjs'
 import {
   commands,
   ConfigurationChangeEvent,
@@ -45,7 +45,10 @@ export const initializeEvents = (dispose: Disposable[]) => {
   }
 
   events = {
-    activeEditor$: eventToObservable(window.onDidChangeActiveTextEditor),
+    activeEditor$: merge(
+      of(window.activeTextEditor),
+      eventToObservable(window.onDidChangeActiveTextEditor)
+    ),
     changePreset$: commandToObservable('sizer.changePreset'),
     configuration$: eventToObservable(workspace.onDidChangeConfiguration),
     document$: eventToObservable(workspace.onDidChangeTextDocument),
