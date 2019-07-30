@@ -1,4 +1,4 @@
-import { combineLatest, EMPTY, merge, of } from 'rxjs'
+import { combineLatest, EMPTY, merge, Observable, of } from 'rxjs'
 import {
   debounceTime,
   distinctUntilChanged,
@@ -6,9 +6,13 @@ import {
   map,
   switchMap
 } from 'rxjs/operators'
-import { Selection, TextDocument, TextEditor } from 'vscode'
-
-import { Events } from './events'
+import {
+  Selection,
+  TextDocument,
+  TextDocumentChangeEvent,
+  TextEditor,
+  TextEditorSelectionChangeEvent
+} from 'vscode'
 
 export const isEditorRelevant = (editor: TextEditor | undefined) =>
   editor !== undefined && isDocumentRelevant(editor.document)
@@ -30,7 +34,11 @@ export const getRelevantText = ({
   activeEditor$,
   document$,
   textSelection$
-}: Events) =>
+}: {
+  activeEditor$: Observable<TextEditor | undefined>
+  document$: Observable<TextDocumentChangeEvent>
+  textSelection$: Observable<TextEditorSelectionChangeEvent>
+}) =>
   activeEditor$.pipe(
     switchMap(e =>
       isEditorRelevant(e)

@@ -1,27 +1,35 @@
 import { combineLatest, merge } from 'rxjs'
+import { Observable } from 'rxjs'
 import { distinctUntilChanged, filter, flatMap, map } from 'rxjs/operators'
 import { MinifyOptions } from 'terser'
 import { CompilerOptions } from 'typescript'
 import { window, workspace } from 'vscode'
 
-import { Events } from './events'
 import { isEqual, isValue } from './utils'
 
-type SizerConfiguration = {
+type SizerConfiguration = Readonly<{
   preset: string
-  presets: {
+  presets: readonly Readonly<{
     name: string
-    terser: MinifyOptions
-    typeScript: CompilerOptions
-  }[]
-}
+    terser: Readonly<MinifyOptions>
+    typeScript: Readonly<CompilerOptions>
+  }>[]
+}>
 
 const getConfiguration = () => workspace.getConfiguration('sizer')
 
 const getPresets = () =>
   getConfiguration().get('presets') as SizerConfiguration['presets']
 
-export const getConfig = ({ changePreset$, configuration$, start$ }: Events) =>
+export const getConfig = ({
+  changePreset$,
+  configuration$,
+  start$
+}: {
+  changePreset$: Observable<unknown>
+  configuration$: Observable<unknown>
+  start$: Observable<unknown>
+}) =>
   combineLatest([
     merge(
       merge(start$, configuration$).pipe(

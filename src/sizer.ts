@@ -1,6 +1,7 @@
+import { flow } from 'lodash-es'
 import { combineLatest } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
-import { ExtensionContext, window } from 'vscode'
+import { Disposable, ExtensionContext, window } from 'vscode'
 
 import { initializeEvents } from './events'
 import { clearOutput, initializeOutput, writeOutput } from './output'
@@ -20,11 +21,16 @@ const makeBanner = (
   `${postTerser ? `\nAfter Terser: ${postTerser}B` : ''}`
 
 export const activate = ({ subscriptions }: ExtensionContext) => {
-  const events = initializeEvents(subscriptions)
+  const events = flow(
+    (s: Disposable[]) =>
+      ({ ...initializeEvents(s), subscriptions: s } as const),
+    e => ({ ...e, currentConfig$: getConfig(e) } as const),
+    e => ({ ...e, relevantText$: getRelevantText(e) } as const)
+  )(subscriptions)
 
   initializeOutput(events)
 
-  const initial$ = combineLatest([getConfig(events), getRelevantText(events)])
+  const initial$ = combineLatest([events.currentConfig$, events.relevantText$])
 
   const typeScript$ = initial$.pipe(
     map(([{ typeScript: typeScriptOptions, ...e }, initialText]) => ({

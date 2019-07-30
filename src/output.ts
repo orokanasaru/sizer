@@ -1,7 +1,5 @@
-import { merge } from 'rxjs'
+import { merge, Observable } from 'rxjs'
 import { languages, OutputChannel, window } from 'vscode'
-
-import { Events } from './events'
 
 let outputChannel: OutputChannel | undefined
 
@@ -28,7 +26,13 @@ const setLanguage = async () => {
   }
 }
 
-export const initializeOutput = ({ activeEditor$, start$ }: Events) => {
+export const initializeOutput = ({
+  activeEditor$,
+  start$
+}: {
+  activeEditor$: Observable<unknown>
+  start$: Observable<unknown>
+}) => {
   merge(start$, activeEditor$).subscribe(setLanguage)
 
   outputChannel = window.createOutputChannel('Sizer')

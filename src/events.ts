@@ -1,33 +1,7 @@
 import { merge, Observable, of, Subject } from 'rxjs'
-import {
-  commands,
-  ConfigurationChangeEvent,
-  Disposable,
-  TextDocumentChangeEvent,
-  TextEditor,
-  TextEditorSelectionChangeEvent,
-  window,
-  workspace
-} from 'vscode'
-
-export type Events = Readonly<{
-  activeEditor$: Observable<TextEditor | undefined>
-  changePreset$: Observable<unknown>
-  configuration$: Observable<ConfigurationChangeEvent>
-  document$: Observable<TextDocumentChangeEvent>
-  start$: Observable<unknown>
-  textSelection$: Observable<TextEditorSelectionChangeEvent>
-}>
-
-let events: Events | undefined
-
-export const getEvents = () => events
+import { commands, Disposable, window, workspace } from 'vscode'
 
 export const initializeEvents = (dispose: Disposable[]) => {
-  if (events) {
-    return events
-  }
-
   const commandToObservable = (command: string): Observable<unknown> => {
     const subject = new Subject()
     dispose.push(commands.registerCommand(command, () => subject.next(true)))
@@ -44,7 +18,7 @@ export const initializeEvents = (dispose: Disposable[]) => {
     return subject
   }
 
-  events = {
+  return {
     activeEditor$: merge(
       of(window.activeTextEditor),
       eventToObservable(window.onDidChangeActiveTextEditor)
@@ -54,7 +28,5 @@ export const initializeEvents = (dispose: Disposable[]) => {
     document$: eventToObservable(workspace.onDidChangeTextDocument),
     start$: of(true),
     textSelection$: eventToObservable(window.onDidChangeTextEditorSelection)
-  }
-
-  return events
+  } as const
 }
