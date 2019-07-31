@@ -1,14 +1,12 @@
 import { CompilerOptions, transpileModule } from 'typescript'
-import ts from 'typescript/package.json'
 
 export const transpile = (
   input: string,
   options: Readonly<CompilerOptions>
 ) => {
-  console.log('TS VERSION: ', ts.version)
   const { diagnostics, outputText } = transpileModule(input, {
     compilerOptions: options,
-    fileName: 'foo.ts'
+    fileName: input.match(/<\/|\/>/) ? 'tmp.tsx' : 'tmp.ts'
   })
 
   return { diagnostics, outputText }

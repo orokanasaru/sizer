@@ -87,7 +87,7 @@
                 },
                 {
                   "tool": "terser",
-                  "name": "default"
+                  "name": "ESNext"
                 }
               ]
             }
@@ -752,7 +752,17 @@
           "default": {
             "terser": [
               {
-                "name": "default"
+                "name": "default",
+                "options": {
+                  "module": true
+                }
+              },
+              {
+                "name": "ESNext",
+                "options": {
+                  "ecma": 9,
+                  "module": true
+                }
               }
             ],
             "typeScript": [
