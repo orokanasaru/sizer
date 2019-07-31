@@ -1,25 +1,64 @@
-import { combineLatest, merge } from 'rxjs'
-import { Observable } from 'rxjs'
+import { combineLatest, merge, Observable } from 'rxjs'
 import { distinctUntilChanged, filter, flatMap, map } from 'rxjs/operators'
 import { MinifyOptions } from 'terser'
 import { CompilerOptions } from 'typescript'
 import { window, workspace } from 'vscode'
 
-import { isEqual, isValue } from './utils'
+import { allValues, isEqual, isValue } from './utils'
 
-type SizerConfiguration = Readonly<{
+type SizerSettings = Readonly<{
+  configurations: {
+    terser: {
+      name: string
+      options: MinifyOptions
+    }[]
+    typeScript: {
+      name: string
+      options: CompilerOptions
+    }[]
+  }
   preset: string
   presets: readonly Readonly<{
     name: string
-    terser: Readonly<MinifyOptions>
-    typeScript: Readonly<CompilerOptions>
+    sequence: readonly Readonly<{
+      name: string
+      tool: 'terser' | 'typeScript'
+    }>[]
   }>[]
 }>
 
-const getConfiguration = () => workspace.getConfiguration('sizer')
+const getSettings = () => workspace.getConfiguration('sizer')
 
 const getPresets = () =>
-  getConfiguration().get('presets') as SizerConfiguration['presets']
+  getSettings().get('presets') as SizerSettings['presets']
+
+const getConfigurations = () =>
+  getSettings().get('configurations') as SizerSettings['configurations']
+
+const getSequenceForPreset = (preset: string) => {
+  const presets = getPresets()
+  const configurations = getConfigurations()
+  const selectedPreset = presets.find(p => p.name === preset)
+
+  if (!selectedPreset) {
+    return
+  }
+
+  return allValues(
+    selectedPreset.sequence.map(s => {
+      const config = (configurations[s.tool] as {
+        name: string
+        options: unknown
+      }[]).find(t => t.name === s.name)
+
+      if (config) {
+        return { options: config.options, tool: s.tool } as
+          | { tool: 'terser'; options: MinifyOptions }
+          | { tool: 'typeScript'; options: CompilerOptions }
+      }
+    })
+  )
+}
 
 export const getConfig = ({
   changePreset$,
@@ -33,7 +72,7 @@ export const getConfig = ({
   combineLatest([
     merge(
       merge(start$, configuration$).pipe(
-        map(() => getConfiguration().get<string>('preset')!),
+        map(() => getSettings().get<string>('preset')!),
         // enable changing presets without overriding quick pick preset
         distinctUntilChanged()
       ),
@@ -46,9 +85,9 @@ export const getConfig = ({
         filter(isValue)
       )
     ),
-    merge(start$, configuration$).pipe(map(getPresets))
+    merge(start$, configuration$)
   ]).pipe(
-    map(([preset, presets]) => presets.filter(p => p.name === preset)[0]),
+    map(([preset]) => getSequenceForPreset(preset)),
     filter(isValue),
     distinctUntilChanged(isEqual)
   )

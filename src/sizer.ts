@@ -11,14 +11,8 @@ import { getRelevantText, isEditorRelevant } from './text'
 import { transpile } from './typescript'
 import { isEqual } from './utils'
 
-const makeBanner = (
-  initial: number,
-  postTypescript: number,
-  postTerser: number
-) =>
-  `Initial: ${initial}B` +
-  `\nAfter TypeScript: ${postTypescript}B` +
-  `${postTerser ? `\nAfter Terser: ${postTerser}B` : ''}`
+const makeBanner = (stats: { name: string; size: number }[]) =>
+  stats.reduce((p, c) => `${p}${c.name}: ${c.size}B\n`, '')
 
 export const activate = ({ subscriptions }: ExtensionContext) => {
   const events = flow(
@@ -32,35 +26,42 @@ export const activate = ({ subscriptions }: ExtensionContext) => {
 
   const initial$ = combineLatest([events.currentConfig$, events.relevantText$])
 
-  const typeScript$ = initial$.pipe(
-    map(([{ typeScript: typeScriptOptions, ...e }, initialText]) => ({
-      ...e,
-      initialText,
-      typeScriptOutput: transpile(initialText, typeScriptOptions).outputText
+  const transformed$ = initial$.pipe(
+    debounceTime(500),
+    map(([sequence, initialText]) => ({
+      transforms: sequence.reduce(
+        (transforms, transform) => {
+          const inputText = transforms.slice(-1)[0].text
+          let text: string
+
+          switch (transform.tool) {
+            case 'terser': {
+              text = minify(inputText, transform.options).code!
+              break
+            }
+
+            case 'typeScript': {
+              text = transpile(inputText, transform.options).outputText!
+              break
+            }
+
+            default: {
+              text = inputText
+            }
+          }
+
+          return [...transforms, { name: transform.tool, text }]
+        },
+        [{ name: 'initial', text: initialText }]
+      )
     })),
     distinctUntilChanged(isEqual)
   )
 
-  const terser$ = typeScript$.pipe(
-    debounceTime(500),
-    map(({ terser: terserOptions, ...e }) => ({
-      ...e,
-      terserOutput: minify(e.typeScriptOutput, terserOptions)
-    })),
-    distinctUntilChanged()
-  )
-
-  const stats$ = terser$.pipe(
-    map(e => ({
-      ...e,
-      stats: {
-        initial: e.initialText.length / 8,
-        postTerser:
-          e.terserOutput.code !== undefined
-            ? e.terserOutput.code.length / 8
-            : 0,
-        postTypeScript: e.typeScriptOutput.length / 8
-      }
+  const stats$ = transformed$.pipe(
+    map(({ transforms }) => ({
+      stats: transforms.map(t => ({ name: t.name, size: t.text.length / 8 })),
+      transforms
     }))
   )
 
@@ -72,24 +73,18 @@ export const activate = ({ subscriptions }: ExtensionContext) => {
     isEditorRelevant(e) ? statusBar.show() : statusBar.hide()
   )
 
-  stats$.subscribe(({ stats, terserOutput, typeScriptOutput }) => {
-    statusBar.text = `${stats.postTerser}B` || '$(alert)'
-    statusBar.tooltip = makeBanner(
-      stats.initial,
-      stats.postTypeScript,
-      stats.postTerser
-    )
+  stats$.subscribe(({ stats, transforms }) => {
+    statusBar.text = `${stats.slice(-1)[0].size}B`
+    statusBar.tooltip = makeBanner(stats)
     statusBar.show()
 
     clearOutput()
-    writeOutput('\n/***TypeScript***/\n')
-    writeOutput(typeScriptOutput)
-    writeOutput('\n/***Terser***/\n')
-    writeOutput(`${terserOutput.code || terserOutput.error}\n`)
+    transforms.forEach(t => {
+      writeOutput(`\n/***${t.name}***/\n${t.text}\n`)
+    })
+
     writeOutput('\n/***Stats***/\n')
-    writeOutput(
-      makeBanner(stats.initial, stats.postTypeScript, stats.postTerser)
-    )
+    writeOutput(makeBanner(stats))
   }, console.error)
 }
 
