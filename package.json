@@ -79,6 +79,19 @@
               ]
             },
             {
+              "name": "IE11",
+              "sequence": [
+                {
+                  "tool": "typeScript",
+                  "name": "IE11"
+                },
+                {
+                  "tool": "terser",
+                  "name": "IE11"
+                }
+              ]
+            },
+            {
               "name": "ESNext",
               "sequence": [
                 {
@@ -664,84 +677,90 @@
                     "description": "Options for the TypeScript configuration",
                     "type": "object",
                     "properties": {
-                      "downlevelIteration": {
-                        "description": "Provide full support for iterables in for..of, spread and destructuring when targeting ES5 or ES3.",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "emitDecoratorMetadata": {
-                        "description": "Emit design-type metadata for decorated declarations in source. See issue #2577 for details.",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "esModuleInterop": {
-                        "description": "Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "experimentalDecorators": {
-                        "description": "Enables experimental support for ES decorators.",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "importHelpers": {
-                        "description": "Import emit helpers (e.g. __extends, __rest, etc..) from tslib",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "jsx": {
-                        "description": "Support JSX in .tsx files: 'react', 'preserve', 'react-native'. See JSX.",
-                        "enum": [
-                          "preserve",
-                          "react",
-                          "react-native"
-                        ],
-                        "default": "preserve"
-                      },
-                      "jsxFactory": {
-                        "description": "Specify the JSX factory function to use when targeting react JSX emit, e.g. React.createElement or h.",
-                        "type": "string",
-                        "default": "React.createElement"
-                      },
-                      "module": {
-                        "description": "Specify module code generation: 'None', 'CommonJS', 'AMD', 'System', 'UMD', 'ES6', 'ES2015' or 'ESNext'. Only 'AMD' and 'System' can be used in conjunction with --outFile. 'ES6' and 'ES2015' values may be used when targeting 'ES5' or lower.",
-                        "enum": [
-                          "None",
-                          "CommonJS",
-                          "AMD",
-                          "System",
-                          "UMD",
-                          "ES6",
-                          "ES2015",
-                          "ESNext"
-                        ],
-                        "default": "CommonJS"
-                      },
-                      "preserveConstEnums": {
-                        "description": "Do not erase const enum declarations in generated code. See const enums documentation for more details.",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "removeComments": {
-                        "description": "Remove all comments except copy-right header comments beginning with /*!",
-                        "type": "boolean",
-                        "default": false
-                      },
-                      "target": {
-                        "description": "Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017' or 'ESNext'. Note: 'ESNext' targets latest supported ES proposed features.",
-                        "enum": [
-                          "ES3",
-                          "ES5",
-                          "ES6",
-                          "ES2015",
-                          "ES2016",
-                          "ES2017",
-                          "ES2018",
-                          "ES2019",
-                          "ES2020",
-                          "ESNext"
-                        ],
-                        "default": "ES3"
+                      "compilerOptions": {
+                        "description": "TypeScript compiler options",
+                        "type": "object",
+                        "properties": {
+                          "downlevelIteration": {
+                            "description": "Provide full support for iterables in for..of, spread and destructuring when targeting ES5 or ES3.",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "emitDecoratorMetadata": {
+                            "description": "Emit design-type metadata for decorated declarations in source. See issue #2577 for details.",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "esModuleInterop": {
+                            "description": "Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "experimentalDecorators": {
+                            "description": "Enables experimental support for ES decorators.",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "importHelpers": {
+                            "description": "Import emit helpers (e.g. __extends, __rest, etc..) from tslib",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "jsx": {
+                            "description": "Support JSX in .tsx files: 'react', 'preserve', 'react-native'. See JSX.",
+                            "enum": [
+                              "preserve",
+                              "react",
+                              "react-native"
+                            ],
+                            "default": "preserve"
+                          },
+                          "jsxFactory": {
+                            "description": "Specify the JSX factory function to use when targeting react JSX emit, e.g. React.createElement or h.",
+                            "type": "string",
+                            "default": "React.createElement"
+                          },
+                          "module": {
+                            "description": "Specify module code generation: 'None', 'CommonJS', 'AMD', 'System', 'UMD', 'ES6', 'ES2015' or 'ESNext'. Only 'AMD' and 'System' can be used in conjunction with --outFile. 'ES6' and 'ES2015' values may be used when targeting 'ES5' or lower.",
+                            "enum": [
+                              "None",
+                              "CommonJS",
+                              "AMD",
+                              "System",
+                              "UMD",
+                              "ES6",
+                              "ES2015",
+                              "ESNext"
+                            ],
+                            "default": "CommonJS"
+                          },
+                          "preserveConstEnums": {
+                            "description": "Do not erase const enum declarations in generated code. See const enums documentation for more details.",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "removeComments": {
+                            "description": "Remove all comments except copy-right header comments beginning with /*!",
+                            "type": "boolean",
+                            "default": false
+                          },
+                          "target": {
+                            "description": "Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017' or 'ESNext'. Note: 'ESNext' targets latest supported ES proposed features.",
+                            "enum": [
+                              "ES3",
+                              "ES5",
+                              "ES6",
+                              "ES2015",
+                              "ES2016",
+                              "ES2017",
+                              "ES2018",
+                              "ES2019",
+                              "ES2020",
+                              "ESNext"
+                            ],
+                            "default": "ES3"
+                          }
+                        }
                       }
                     }
                   }
@@ -752,8 +771,12 @@
           "default": {
             "terser": [
               {
-                "name": "default",
+                "name": "default"
+              },
+              {
+                "name": "IE11",
                 "options": {
+                  "ecma": 5,
                   "module": true
                 }
               },
@@ -768,16 +791,32 @@
             "typeScript": [
               {
                 "name": "default",
+                "config": [
+                  "tsconfig.json"
+                ]
+              },
+              {
+                "name": "IE11",
+                "config": [
+                  "tsconfig.json"
+                ],
                 "options": {
-                  "jsx": "react"
+                  "compilerOptions": {
+                    "module": "ESNext",
+                    "target": "ES5"
+                  }
                 }
               },
               {
                 "name": "ESNext",
+                "config": [
+                  "tsconfig.json"
+                ],
                 "options": {
-                  "module": "ESNext",
-                  "target": "ESNext",
-                  "jsx": "react"
+                  "compilerOptions": {
+                    "module": "ESNext",
+                    "target": "ESNext"
+                  }
                 }
               }
             ]

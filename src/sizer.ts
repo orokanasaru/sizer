@@ -1,69 +1,24 @@
 import { pipe } from 'ramda'
-import { combineLatest } from 'rxjs'
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
+import { withLatestFrom } from 'rxjs/operators'
 import { Disposable, ExtensionContext, window } from 'vscode'
 
 import { initializeEvents } from './events'
 import { clearOutput, initializeOutput, writeOutput } from './output'
-import { getConfig } from './settings'
-import { minify } from './terser'
+import { getSequence } from './sequence'
+import { getStats } from './stats'
 import { getRelevantText, isEditorRelevant } from './text'
-import { transpile } from './typescript'
-import { equals } from './utils'
-
-const makeBanner = (stats: { name: string; size: number }[]) =>
-  stats.reduce((p, c) => `${p}${c.name}: ${c.size}B\n`, '')
+import { getTransforms } from './transforms'
 
 export const activate = ({ subscriptions }: ExtensionContext) => {
   const events = pipe(
-    (s: Disposable[]) =>
-      ({ ...initializeEvents(s), subscriptions: s } as const),
-    e => ({ ...e, currentConfig$: getConfig(e) } as const),
-    e => ({ ...e, relevantText$: getRelevantText(e) } as const)
+    (s: Disposable[]) => ({ ...initializeEvents(s), subscriptions: s }),
+    e => ({ ...e, relevantText$: getRelevantText(e) }),
+    e => ({ ...e, sequence$: getSequence(e) }),
+    e => ({ ...e, transforms$: getTransforms(e) }),
+    e => ({ ...e, stats$: getStats(e) })
   )(subscriptions)
 
   initializeOutput(events)
-
-  const initial$ = combineLatest([events.currentConfig$, events.relevantText$])
-
-  const transformed$ = initial$.pipe(
-    debounceTime(500),
-    map(([sequence, initialText]) => ({
-      transforms: sequence.reduce(
-        (transforms, transform) => {
-          const inputText = transforms.slice(-1)[0].text.trimEnd()
-          let text: string
-
-          switch (transform.tool) {
-            case 'terser': {
-              text = minify(inputText, transform.options).code || ''
-              break
-            }
-
-            case 'typeScript': {
-              text = transpile(inputText, transform.options).outputText
-              break
-            }
-
-            default: {
-              text = inputText
-            }
-          }
-
-          return [...transforms, { name: transform.tool, text }]
-        },
-        [{ name: 'initial', text: initialText }]
-      )
-    })),
-    distinctUntilChanged(equals)
-  )
-
-  const stats$ = transformed$.pipe(
-    map(({ transforms }) => ({
-      stats: transforms.map(t => ({ name: t.name, size: t.text.length / 8 })),
-      transforms
-    }))
-  )
 
   const statusBar = window.createStatusBarItem()
   statusBar.command = 'sizer.changePreset'
@@ -73,19 +28,22 @@ export const activate = ({ subscriptions }: ExtensionContext) => {
     isEditorRelevant(e) ? statusBar.show() : statusBar.hide()
   )
 
-  stats$.subscribe(({ stats, transforms }) => {
-    statusBar.text = `${stats.slice(-1)[0].size}B`
-    statusBar.tooltip = makeBanner(stats)
-    statusBar.show()
+  events.stats$
+    .pipe(withLatestFrom(events.transforms$))
+    .subscribe(([{ banner, headline }, transforms]) => {
+      statusBar.text = headline
+      statusBar.tooltip = banner
+      statusBar.show()
 
-    clearOutput()
-    transforms.slice(1).forEach(t => {
-      writeOutput(`\n/***${t.name}***/\n${t.text}\n`)
-    })
+      clearOutput()
+      // don't show initial text
+      transforms.slice(1).forEach(t => {
+        writeOutput(`\n/***${t.name}***/\n${t.text}\n`)
+      })
 
-    writeOutput('\n/***Stats***/\n')
-    writeOutput(makeBanner(stats))
-  }, console.error)
+      writeOutput('\n/***Stats***/\n')
+      writeOutput(banner)
+    }, console.error)
 }
 
 export const deactivate = () => undefined
