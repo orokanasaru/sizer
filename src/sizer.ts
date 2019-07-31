@@ -79,7 +79,7 @@ export const activate = ({ subscriptions }: ExtensionContext) => {
     statusBar.show()
 
     clearOutput()
-    transforms.forEach(t => {
+    transforms.slice(1).forEach(t => {
       writeOutput(`\n/***${t.name}***/\n${t.text}\n`)
     })
 
