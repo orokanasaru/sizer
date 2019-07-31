@@ -791,14 +791,14 @@
     "webpack:watch": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} webpack --config webpack.config.ts --watch --mode=development"
   },
   "dependencies": {
-    "lodash-es": "^4.17.11",
+    "ramda": "^0.26.1",
     "rxjs": "^6.5.2"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
-    "@types/lodash-es": "^4.17.3",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.6.8",
+    "@types/ramda": "^0.26.18",
     "@types/terser-webpack-plugin": "^1.2.1",
     "@types/vscode": "^1.36.0",
     "@types/webpack": "^4.32.1",

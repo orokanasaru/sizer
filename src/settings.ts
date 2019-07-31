@@ -4,7 +4,7 @@ import { MinifyOptions } from 'terser'
 import { CompilerOptions } from 'typescript'
 import { window, workspace } from 'vscode'
 
-import { allValues, isEqual, isValue } from './utils'
+import { allValues, equals, isValue } from './utils'
 
 type SizerSettings = Readonly<{
   configurations: {
@@ -89,5 +89,5 @@ export const getConfig = ({
   ]).pipe(
     map(([preset]) => getSequenceForPreset(preset)),
     filter(isValue),
-    distinctUntilChanged(isEqual)
+    distinctUntilChanged(equals)
   )

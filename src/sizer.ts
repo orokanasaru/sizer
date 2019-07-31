@@ -1,4 +1,4 @@
-import { flow } from 'lodash-es'
+import { pipe } from 'ramda'
 import { combineLatest } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators'
 import { Disposable, ExtensionContext, window } from 'vscode'
@@ -9,13 +9,13 @@ import { getConfig } from './settings'
 import { minify } from './terser'
 import { getRelevantText, isEditorRelevant } from './text'
 import { transpile } from './typescript'
-import { isEqual } from './utils'
+import { equals } from './utils'
 
 const makeBanner = (stats: { name: string; size: number }[]) =>
   stats.reduce((p, c) => `${p}${c.name}: ${c.size}B\n`, '')
 
 export const activate = ({ subscriptions }: ExtensionContext) => {
-  const events = flow(
+  const events = pipe(
     (s: Disposable[]) =>
       ({ ...initializeEvents(s), subscriptions: s } as const),
     e => ({ ...e, currentConfig$: getConfig(e) } as const),
@@ -55,7 +55,7 @@ export const activate = ({ subscriptions }: ExtensionContext) => {
         [{ name: 'initial', text: initialText }]
       )
     })),
-    distinctUntilChanged(isEqual)
+    distinctUntilChanged(equals)
   )
 
   const stats$ = transformed$.pipe(

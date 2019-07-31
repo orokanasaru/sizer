@@ -1,6 +1,6 @@
-import { isEqual as lodashEqual } from 'lodash-es'
+import { equals as ramdaEquals } from 'ramda'
 
-export const isEqual = lodashEqual as <T>(l: T, r: T) => boolean
+export const equals = ramdaEquals as <T>(l: T, r: T) => boolean
 export const isValue = <T>(val: T | undefined): val is T => val !== undefined
 
 export const allValues = <T>(seq: (T | undefined)[]) =>

@@ -1,11 +1,11 @@
 dependencies:
-  lodash-es: 4.17.15
+  ramda: 0.26.1
   rxjs: 6.5.2
 devDependencies:
   '@types/glob': 7.1.1
-  '@types/lodash-es': 4.17.3
   '@types/mocha': 5.2.7
   '@types/node': 12.6.8
+  '@types/ramda': 0.26.18
   '@types/terser-webpack-plugin': 1.2.1
   '@types/vscode': 1.36.0
   '@types/webpack': 4.32.1
@@ -64,16 +64,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
-  /@types/lodash-es/4.17.3:
-    dependencies:
-      '@types/lodash': 4.14.136
-    dev: true
-    resolution:
-      integrity: sha512-iHI0i7ZAL1qepz1Y7f3EKg/zUMDwDfTzitx+AlHhJJvXwenP682ZyGbgPSc5Ej3eEAKVbNWKFuwOadCj5vBbYQ==
-  /@types/lodash/4.14.136:
-    dev: true
-    resolution:
-      integrity: sha512-0GJhzBdvsW2RUccNHOBkabI8HZVdOXmXbXhuKlDEd5Vv12P7oAVGfomGp3Ne21o5D/qu1WmthlNKFaoZJJeErA==
   /@types/minimatch/3.0.3:
     dev: true
     resolution:
@@ -90,6 +80,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-aX+gFgA5GHcDi89KG5keey2zf0WfZk/HAQotEamsK2kbey+8yGKcson0hbK8E+v0NArlCJQCqMP161YhV6ZXLg==
+  /@types/ramda/0.26.18:
+    dev: true
+    resolution:
+      integrity: sha512-wK3NLaAkL/ht7Nw4IZsOagJuYqzZgoboFvILolOPtmoKyy25gTdz/uvB/bXsv6vdWENYv+ml5ph873P2d/+9HA==
   /@types/tapable/1.0.4:
     dev: true
     resolution:
@@ -2206,10 +2200,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==
-  /lodash-es/4.17.15:
-    dev: false
-    resolution:
-      integrity: sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
   /lodash/4.17.15:
     dev: true
     resolution:
@@ -2947,6 +2937,10 @@ packages:
       node: '>=0.4.x'
     resolution:
       integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
+  /ramda/0.26.1:
+    dev: false
+    resolution:
+      integrity: sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
   /randombytes/2.1.0:
     dependencies:
       safe-buffer: 5.2.0
@@ -4110,9 +4104,9 @@ packages:
       integrity: sha512-kKfnnYkbTfrAdd0xICNFw7Atm8nKpLcLv9AZGEt+kczL/WQVai4e2V6ZN8U/O+iI6WrNuJjNNOyu4zfhl9D3Hg==
 specifiers:
   '@types/glob': ^7.1.1
-  '@types/lodash-es': ^4.17.3
   '@types/mocha': ^5.2.7
   '@types/node': ^12.6.8
+  '@types/ramda': ^0.26.18
   '@types/terser-webpack-plugin': ^1.2.1
   '@types/vscode': ^1.36.0
   '@types/webpack': ^4.32.1
@@ -4121,8 +4115,8 @@ specifiers:
   clean-webpack-plugin: ^3.0.0
   cross-env: ^5.2.0
   glob: ^7.1.4
-  lodash-es: ^4.17.11
   mocha: ^6.2.0
+  ramda: ^0.26.1
   rxjs: ^6.5.2
   source-map-loader: ^0.2.4
   source-map-support: ^0.5.12
