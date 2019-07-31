@@ -31,17 +31,17 @@ export const activate = ({ subscriptions }: ExtensionContext) => {
     map(([sequence, initialText]) => ({
       transforms: sequence.reduce(
         (transforms, transform) => {
-          const inputText = transforms.slice(-1)[0].text
+          const inputText = transforms.slice(-1)[0].text.trimEnd()
           let text: string
 
           switch (transform.tool) {
             case 'terser': {
-              text = minify(inputText, transform.options).code!
+              text = minify(inputText, transform.options).code || ''
               break
             }
 
             case 'typeScript': {
-              text = transpile(inputText, transform.options).outputText!
+              text = transpile(inputText, transform.options).outputText
               break
             }
 
