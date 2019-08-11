@@ -1,19 +1,22 @@
-import { pipe } from 'ramda'
+import * as R from 'ramda'
 import { withLatestFrom } from 'rxjs/operators'
 import { Disposable, ExtensionContext, window } from 'vscode'
 
 import { initializeEvents } from './events'
 import { clearOutput, initializeOutput, writeOutput } from './output'
 import { getSequence } from './sequence'
+import { getSequenceConfig } from './sequence-config'
 import { getStats } from './stats'
-import { getRelevantText, isEditorRelevant } from './text'
+import { getFileName, getRelevantText, isEditorRelevant } from './text'
 import { getTransforms } from './transforms'
 
 export const activate = ({ subscriptions }: ExtensionContext) => {
-  const events = pipe(
+  const events = R.pipe(
     (s: Disposable[]) => ({ ...initializeEvents(s), subscriptions: s }),
     e => ({ ...e, relevantText$: getRelevantText(e) }),
+    e => ({ ...e, fileName$: getFileName(e) }),
     e => ({ ...e, sequence$: getSequence(e) }),
+    e => ({ ...e, sequenceConfig$: getSequenceConfig(e) }),
     e => ({ ...e, transforms$: getTransforms(e) }),
     e => ({ ...e, stats$: getStats(e) })
   )(subscriptions)

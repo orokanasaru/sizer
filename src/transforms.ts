@@ -1,39 +1,49 @@
-import { clone } from 'ramda'
+import * as R from 'ramda'
 import { combineLatest, Observable } from 'rxjs'
 import { debounceTime, distinctUntilChanged, map, share } from 'rxjs/operators'
 import { minify, MinifyOptions } from 'terser'
-import { transpileModule } from 'typescript'
+import { CompilerOptions, transpileModule } from 'typescript'
 
-import { Sequence, TypeScriptOptions } from './sequence'
+import { SequenceConfig } from './sequence-config'
+import { TransformOptions } from './transforms'
 import { equals } from './utils'
 
 export type Transforms = { name: string; text: string }[]
 
-export const terser = (input: string, options: MinifyOptions) =>
-  // terser mutates the options which breaks equality checking later
-  minify(input, clone(options))
+export type TransformOptions<T> = {
+  fileName?: string
+  input: string
+  options?: T
+}
 
-export const typeScript = (
-  input: string,
-  { compilerOptions }: TypeScriptOptions
-) =>
+const terser = ({ input, options }: TransformOptions<MinifyOptions>) =>
+  // terser mutates the options which breaks equality checking later
+  minify(input, R.clone(options))
+
+const typeScript = ({
+  input,
+  fileName,
+  options
+}: TransformOptions<CompilerOptions>) =>
   transpileModule(input, {
-    compilerOptions,
+    compilerOptions: options,
     // infer ts vs tsx based on presence of closing tags
     // enables use on unnamed files
-    fileName: input.match(/<\/|\/>/) ? 'tmp.tsx' : 'tmp.ts'
+    fileName: fileName || input.match(/<\/|\/>/) ? 'tmp.tsx' : 'tmp.ts'
   })
 
 export const getTransforms = ({
+  fileName$,
   relevantText$,
-  sequence$
+  sequenceConfig$
 }: {
+  fileName$: Observable<string>
   relevantText$: Observable<string>
-  sequence$: Observable<Sequence>
+  sequenceConfig$: Observable<SequenceConfig>
 }) =>
-  combineLatest([relevantText$, sequence$]).pipe(
+  combineLatest([fileName$, relevantText$, sequenceConfig$]).pipe(
     debounceTime(500),
-    map(([initialText, sequence]) =>
+    map(([fileName, initialText, sequence]) =>
       sequence.reduce(
         (transforms, transform) => {
           const inputText = transforms.slice(-1)[0].text.trimEnd()
@@ -41,12 +51,18 @@ export const getTransforms = ({
 
           switch (transform.tool) {
             case 'terser': {
-              text = terser(inputText, transform.options).code || ''
+              text =
+                terser({ input: inputText, options: transform.options }).code ||
+                ''
               break
             }
 
             case 'typeScript': {
-              text = typeScript(inputText, transform.options).outputText
+              text = typeScript({
+                fileName,
+                input: inputText,
+                options: transform.options
+              }).outputText
               break
             }
 

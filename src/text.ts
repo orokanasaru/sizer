@@ -67,3 +67,13 @@ export const getRelevantText = ({
     distinctUntilChanged(),
     debounceTime(100)
   )
+
+export const getFileName = ({
+  activeEditor$
+}: {
+  activeEditor$: Observable<TextEditor | undefined>
+}) =>
+  activeEditor$.pipe(
+    filter(isEditorRelevant),
+    map(e => e!.document.fileName)
+  )
