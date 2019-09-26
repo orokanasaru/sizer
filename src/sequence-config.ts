@@ -31,53 +31,62 @@ export const getSequenceConfig = ({
             }
           }
 
-          switch (s.tool) {
-            case 'terser': {
-              const config = await cosmiconfig('terser', {
-                searchPlaces: s.configFiles
-              }).search(fileName)
+          try {
+            switch (s.tool) {
+              case 'terser': {
+                const config = await cosmiconfig('terser', {
+                  searchPlaces: s.configFiles
+                }).search(fileName)
 
-              return {
-                ...s,
-                config: config ? config.config : {}
-              }
-            }
-
-            case 'typeScript': {
-              const config = await cosmiconfig('tsconfig', {
-                searchPlaces: s.configFiles
-              }).search(fileName)
-
-              if (!config) {
                 return {
                   ...s,
-                  config: {}
+                  config: config ? config.config : {}
                 }
               }
 
-              const tsconfig = getParsedCommandLineOfConfigFile(
-                config.filepath,
-                {},
-                {
-                  fileExists: fs.existsSync,
-                  getCurrentDirectory: () => process.cwd(),
-                  onUnRecoverableConfigFileDiagnostic: console.error,
-                  readDirectory: () => [],
-                  // tslint:disable-next-line: non-literal-fs-path
-                  readFile: f => fs.readFileSync(f).toString(),
-                  trace: console.log,
-                  useCaseSensitiveFileNames: false
-                }
-              )
+              case 'typeScript': {
+                const config = await cosmiconfig('tsconfig', {
+                  searchPlaces: s.configFiles
+                }).search(fileName)
 
-              return {
-                ...s,
-                config: tsconfig ? tsconfig.options : {}
+                if (!config) {
+                  return {
+                    ...s,
+                    config: {}
+                  }
+                }
+
+                const tsconfig = getParsedCommandLineOfConfigFile(
+                  config.filepath,
+                  {},
+                  {
+                    fileExists: fs.existsSync,
+                    getCurrentDirectory: () => process.cwd(),
+                    onUnRecoverableConfigFileDiagnostic: console.error,
+                    readDirectory: () => [],
+                    // tslint:disable-next-line: non-literal-fs-path
+                    readFile: f => fs.readFileSync(f).toString(),
+                    trace: console.log,
+                    useCaseSensitiveFileNames: false
+                  }
+                )
+
+                return {
+                  ...s,
+                  config: tsconfig ? tsconfig.options : {}
+                }
+              }
+
+              default: {
+                return s
               }
             }
+          } catch (e) {
+            console.warn('error parsing config', e)
 
-            default: {
-              return s
+            return {
+              ...s,
+              config: {}
             }
           }
         })
