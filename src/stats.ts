@@ -15,7 +15,7 @@ export const getStats = ({
     map(transforms => {
       const stats = transforms.map(t => ({
         name: t.name,
-        size: t.text.length / 8
+        size: t.text.length
       }))
 
       return {
