@@ -1,4 +1,4 @@
-import cosmiconfig from 'cosmiconfig'
+import { cosmiconfig } from 'cosmiconfig'
 import fs from 'fs'
 import * as R from 'ramda'
 import { combineLatest, Observable } from 'rxjs'
@@ -11,7 +11,8 @@ import { equals } from './utils'
 
 export type SequenceConfig = (
   | { tool: 'terser'; options: MinifyOptions }
-  | { tool: 'typeScript'; options: CompilerOptions })[]
+  | { tool: 'typeScript'; options: CompilerOptions }
+)[]
 
 export const getSequenceConfig = ({
   fileName$,
@@ -40,6 +41,7 @@ export const getSequenceConfig = ({
 
                 return {
                   ...s,
+                  // tslint:disable-next-line: no-unsafe-any
                   config: config ? config.config : {}
                 }
               }
