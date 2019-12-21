@@ -29,7 +29,7 @@ const typeScript = ({
     compilerOptions: options,
     // infer ts vs tsx based on presence of closing tags
     // enables use on unnamed files
-    fileName: fileName || input.match(/<\/|\/>/) ? 'tmp.tsx' : 'tmp.ts'
+    fileName: fileName || (input.match(/<\/|\/>/) ? 'tmp.tsx' : 'tmp.ts')
   })
 
 export const getTransforms = ({
