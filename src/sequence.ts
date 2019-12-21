@@ -35,16 +35,17 @@ export type Sequence = (
       configFiles?: string[]
       tool: 'typeScript'
       options: CompilerOptions
-    })[]
+    }
+)[]
 
-const getConfiguration = () => workspace.getConfiguration('sizer')
+const getConfiguration = () =>
+  workspace.getConfiguration('sizer') as {
+    get<T extends keyof SizerSettings>(key: T): SizerSettings[T]
+  }
 
-const getPresets = () =>
-  getConfiguration().get<SizerSettings['presets']>('presets') || []
+const getPresets = () => getConfiguration().get('presets') || []
 
-const getConfigurations = () =>
-  getConfiguration().get<SizerSettings['configurations']>('configurations') ||
-  {}
+const getConfigurations = () => getConfiguration().get('configurations') || {}
 
 const getSequenceForPreset = (preset: string) => {
   const selectedPreset = getPresets().find(p => p.name === preset)
@@ -88,7 +89,7 @@ export const getSequence = ({
   combineLatest([
     merge(
       merge(configuration$, start$).pipe(
-        map(() => getConfiguration().get<string>('preset')!),
+        map(() => getConfiguration().get('preset')!),
         // enable changing presets without overriding quick pick preset
         distinctUntilChanged()
       ),
