@@ -5,16 +5,17 @@ import { minify, MinifyOptions } from 'terser'
 import { CompilerOptions, transpileModule } from 'typescript'
 
 import { SequenceConfig } from './sequence-config'
-import { TransformOptions } from './transforms'
 import { equals } from './utils'
 
 export type Transforms = { name: string; text: string }[]
 
 export type TransformOptions<T> = {
-  fileName?: string
+  fileName: string
   input: string
   options?: T
 }
+
+const hasExtension = (path: string) => /\.[^.]*$/.test(path)
 
 const terser = ({ input, options }: TransformOptions<MinifyOptions>) =>
   // terser mutates the options which breaks equality checking later
@@ -29,7 +30,9 @@ const typeScript = ({
     compilerOptions: options,
     // infer ts vs tsx based on presence of closing tags
     // enables use on unnamed files
-    fileName: fileName || (input.match(/<\/|\/>/) ? 'tmp.tsx' : 'tmp.ts')
+    fileName: hasExtension(fileName)
+      ? fileName
+      : `${fileName}.${input.match(/<\/|\/>/) ? 'tsx' : 'ts'}`
   })
 
 export const getTransforms = ({
@@ -52,8 +55,11 @@ export const getTransforms = ({
           switch (transform.tool) {
             case 'terser': {
               text =
-                terser({ input: inputText, options: transform.options }).code ||
-                ''
+                terser({
+                  fileName,
+                  input: inputText,
+                  options: transform.options
+                }).code || ''
               break
             }
 
