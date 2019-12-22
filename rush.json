@@ -312,16 +312,20 @@
     //   "reviewCategory": "tools"
     // }
     {
-      "packageName": "@sizer/infra",
-      "projectFolder": "packages/infra"
-    },
-    {
       "packageName": "@sizer/extension",
       "projectFolder": "packages/extension"
     },
     {
-      "packageName": "@sizer/lib",
-      "projectFolder": "packages/lib"
+      "packageName": "@sizer/infra",
+      "projectFolder": "packages/infra"
+    },
+    {
+      "packageName": "@sizer/shared",
+      "projectFolder": "packages/shared"
+    },
+    {
+      "packageName": "@sizer/site",
+      "projectFolder": "packages/site"
     },
     {
       "packageName": "@sizer/template",

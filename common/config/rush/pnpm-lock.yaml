@@ -3,7 +3,9 @@ dependencies:
   '@microsoft/rush-lib': 5.17.2
   '@rush-temp/extension': 'file:projects/extension.tgz'
   '@rush-temp/infra': 'file:projects/infra.tgz'
-  '@rush-temp/lib': 'file:projects/lib.tgz'
+  '@rush-temp/shared': 'file:projects/shared.tgz'
+  '@rush-temp/site': 'file:projects/site.tgz'
+  '@rush-temp/template': 'file:projects/template.tgz'
   '@types/glob': 7.1.1
   '@types/mocha': 5.2.7
   '@types/ncp': 2.0.3
@@ -5595,6 +5597,7 @@ packages:
       '@microsoft/node-core-library': 3.18.0
       '@microsoft/rush-lib': 5.17.2
       '@types/ncp': 2.0.3
+      '@types/node': 12.12.21
       '@types/prompts': 2.0.3
       '@types/yargs': 13.0.3
       ncp: 2.0.0
@@ -5604,15 +5607,29 @@ packages:
     dev: false
     name: '@rush-temp/infra'
     resolution:
-      integrity: sha512-04IKOdIctNuzTIoCLjhOTRBg8w5Swj4619c1mOdzCvmbYM972/MBJKhJy7+RCfyKdq/l2LPexas1HZr6xu4Izg==
+      integrity: sha512-YYbjM0YMfS0rRfg1yzLbgqRw2YlaMCmpEa2AGQgqHuuHkrMaXmEdv1x6ep2XySXminGL9B+h3X15IeTnw1nT0g==
       tarball: 'file:projects/infra.tgz'
     version: 0.0.0
-  'file:projects/lib.tgz':
+  'file:projects/shared.tgz':
     dev: false
-    name: '@rush-temp/lib'
+    name: '@rush-temp/shared'
     resolution:
-      integrity: sha512-C20UmUkHlVS4BnLrGwoaZ+lTVA+ZwoP9nN9uGMqZTHuW/khz+7oMpZYsJ+GPM3TY2/EyV+hvZ04+DMbwAEBoNg==
-      tarball: 'file:projects/lib.tgz'
+      integrity: sha512-9KkedzL7bDVgUV4a63mVc0vCZL+jYdHE6MQw8DeLGX8Urigy8hqwDwuk6XB7A8sihHuFEIH/LUjnLTSGLMd4gw==
+      tarball: 'file:projects/shared.tgz'
+    version: 0.0.0
+  'file:projects/site.tgz':
+    dev: false
+    name: '@rush-temp/site'
+    resolution:
+      integrity: sha512-6rZI4r6eZUzIEeIyJXhOGMl97ZsHA4ufv6t7dxqWc+tJxNZFLs7vHxIUeP0VeX6pe/HCwZ8N+tudTamk6k/TYw==
+      tarball: 'file:projects/site.tgz'
+    version: 0.0.0
+  'file:projects/template.tgz':
+    dev: false
+    name: '@rush-temp/template'
+    resolution:
+      integrity: sha512-dbia6A7++k3x1xb1652qyZA2r8nSWF2vH8kq7tA/meqLdWKl47t15WK6DrA1a7R8b/6PS7P6rG0j79JQq0FqBQ==
+      tarball: 'file:projects/template.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
@@ -5620,7 +5637,9 @@ specifiers:
   '@microsoft/rush-lib': ^5.17.2
   '@rush-temp/extension': 'file:./projects/extension.tgz'
   '@rush-temp/infra': 'file:./projects/infra.tgz'
-  '@rush-temp/lib': 'file:./projects/lib.tgz'
+  '@rush-temp/shared': 'file:./projects/shared.tgz'
+  '@rush-temp/site': 'file:./projects/site.tgz'
+  '@rush-temp/template': 'file:./projects/template.tgz'
   '@types/glob': ^7.1.1
   '@types/mocha': ^5.2.7
   '@types/ncp': ^2.0.3

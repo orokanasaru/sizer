@@ -15,10 +15,13 @@
       "path": "./packages/extension"
     },
     {
-      "path": "./packages/lib"
+      "path": "./packages/infra"
     },
     {
-      "path": "./packages/infra"
+      "path": "./packages/shared"
+    },
+    {
+      "path": "./packages/site"
     },
     {
       "path": "./packages/template"

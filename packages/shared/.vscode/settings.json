@@ -1,0 +1,12 @@
+{
+  "files.exclude": {
+    ".history": true,
+    ".rush": true,
+    "node_modules": true
+  },
+  "search.exclude": {
+    "build": true,
+    "dist": true,
+    "lib": true
+  }
+}

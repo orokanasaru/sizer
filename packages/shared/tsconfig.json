@@ -1,0 +1,3 @@
+{
+  "extends": "@sizer/infra/tsconfig"
+}

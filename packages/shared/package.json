@@ -1,0 +1,10 @@
+{
+  "name": "@sizer/shared",
+  "version": "0.0.1",
+  "description": "Shared code for powering site and extension",
+  "author": "orokanasaru",
+  "license": "MIT",
+  "devDependencies": {
+    "@sizer/infra": "^0.0.1"
+  }
+}
