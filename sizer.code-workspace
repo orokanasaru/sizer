@@ -19,6 +19,9 @@
     },
     {
       "path": "./packages/infra"
+    },
+    {
+      "path": "./packages/template"
     }
   ],
   "settings": {

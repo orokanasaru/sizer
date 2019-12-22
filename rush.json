@@ -322,6 +322,10 @@
     {
       "packageName": "@sizer/lib",
       "projectFolder": "packages/lib"
+    },
+    {
+      "packageName": "@sizer/template",
+      "projectFolder": "packages/template"
     }
   ]
 }

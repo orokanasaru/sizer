@@ -83,21 +83,17 @@ const createPackage = async () => {
     rushConfig,
     'projects',
     {
-      packageName: `@ms-ows/${packageName}`,
+      packageName: `@sizer/${packageName}`,
       projectFolder: `packages/${packageName}`
     },
     'packageName'
   )
 
-  rushConfig.projects = [...rushConfig.projects].sort((l, r) =>
-    l.packageName.localeCompare(r.packageName)
-  )
-
   JsonFile.save(rushConfig, rushJson, { updateExistingFile: true })
 
-  console.log('Copying starter files')
+  console.log('Copying template files')
 
-  await copy(packagePath('sample-app'), packagePath(packageName))
+  await copy(packagePath('template'), packagePath(packageName))
 
   console.log('Updating package.json')
 
@@ -107,11 +103,11 @@ const createPackage = async () => {
     updateExistingFile: true
   })
 
-  console.log('Updating sample-app references')
+  console.log('Updating template references')
 
   await replaceInFile({
     files: `${packagePath(packageName)}/**`,
-    from: /sample-app/g,
+    from: /template/g,
     ignore: '**/node_modules/**',
     to: packageName
   })
@@ -119,14 +115,13 @@ const createPackage = async () => {
   console.log('Updating workspace')
 
   const workspacePath = require.resolve('../../../sizer.code-workspace')
-
   const workspaceJson = JsonFile.load(workspacePath) as WorkspaceJson
 
   addSorted(
     workspaceJson,
     'folders',
     {
-      path: `./rush-managed/packages/${packageName}`
+      path: `./packages/${packageName}`
     },
     'path'
   )

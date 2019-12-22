@@ -94,7 +94,7 @@
       "commandKind": "global",
       "name": "create-package",
       "summary": "Creates a new project",
-      "shellCommand": "npx ts-node --project packages/infra/tsconfig.build.json packages/infra/src/create-package.ts"
+      "shellCommand": "npx ts-node --project packages/infra/tsconfig.build.json packages/infra/rush-commands/create-package.ts"
     }
   ],
 

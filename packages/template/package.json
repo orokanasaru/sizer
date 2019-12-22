@@ -1,0 +1,10 @@
+{
+  "name": "@sizer/template",
+  "version": "0.0.1",
+  "description": "template to bootstrap sizer packages",
+  "author": "orokanasaru",
+  "license": "MIT",
+  "devDependencies": {
+    "@sizer/infra": "^0.0.1"
+  }
+}
