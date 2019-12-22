@@ -1,7 +1,7 @@
 {
   "files.exclude": {
     ".history": true,
-    "extension": true,
-    "common/temp": true
+    "common/temp": true,
+    "packages": true
   }
 }

@@ -12,7 +12,10 @@
       "path": "."
     },
     {
-      "path": "./extension"
+      "path": "./packages/extension"
+    },
+    {
+      "path": "./packages/lib"
     }
   ],
   "settings": {
@@ -40,6 +43,7 @@
       "sideBar.border": "#4fe8b4",
       "editorGroup.border": "#4fe8b4",
       "tab.activeBorder": "#4fe8b4"
-    }
+    },
+    "cSpell.words": ["cosmiconfig", "filepath"]
   }
 }

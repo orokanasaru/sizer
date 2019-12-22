@@ -1,5 +1,6 @@
 dependencies:
-  '@rush-temp/sizer': 'file:projects/sizer.tgz'
+  '@rush-temp/extension': 'file:projects/extension.tgz'
+  '@rush-temp/lib': 'file:projects/lib.tgz'
   '@types/glob': 7.1.1
   '@types/mocha': 5.2.7
   '@types/node': 12.12.21
@@ -4731,7 +4732,7 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
-  'file:projects/sizer.tgz':
+  'file:projects/extension.tgz':
     dependencies:
       '@types/glob': 7.1.1
       '@types/mocha': 5.2.7
@@ -4768,13 +4769,22 @@ packages:
       webpack-cli: 3.3.10_webpack@4.41.4
       webpack-merge: 4.2.2
     dev: false
-    name: '@rush-temp/sizer'
+    name: '@rush-temp/extension'
     resolution:
-      integrity: sha512-tCtmGdNXwB1eo126IWUDIK4OsKZ/1TVVLCyoVYQT8xlMMJ7iHdHj5kXWFW4vvOVHRSgx6j53TRl5ZJZ0L4g5zA==
-      tarball: 'file:projects/sizer.tgz'
+      integrity: sha512-oGDSCSs83xIlOVKK0DdNgkkXcqsVHedRxOhOQ2ObSolpe3XSlSR/xyVqmsuz6NeeCx5fOcXHK/kqWN360PFrCw==
+      tarball: 'file:projects/extension.tgz'
     version: 0.0.0
+  'file:projects/lib.tgz':
+    dev: false
+    name: '@rush-temp/lib'
+    resolution:
+      integrity: sha512-C20UmUkHlVS4BnLrGwoaZ+lTVA+ZwoP9nN9uGMqZTHuW/khz+7oMpZYsJ+GPM3TY2/EyV+hvZ04+DMbwAEBoNg==
+      tarball: 'file:projects/lib.tgz'
+    version: 0.0.0
+registry: ''
 specifiers:
-  '@rush-temp/sizer': 'file:./projects/sizer.tgz'
+  '@rush-temp/extension': 'file:./projects/extension.tgz'
+  '@rush-temp/lib': 'file:./projects/lib.tgz'
   '@types/glob': ^7.1.1
   '@types/mocha': ^5.2.7
   '@types/node': ^12.12.21

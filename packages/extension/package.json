@@ -1,5 +1,5 @@
 {
-  "name": "sizer",
+  "name": "@sizer/extension",
   "displayName": "Sizer",
   "description": "Show size of minified TypeScript",
   "version": "0.0.1",

@@ -312,8 +312,12 @@
     //   "reviewCategory": "tools"
     // }
     {
-      "packageName": "sizer",
-      "projectFolder": "extension"
+      "packageName": "@sizer/extension",
+      "projectFolder": "packages/extension"
+    },
+    {
+      "packageName": "@sizer/lib",
+      "projectFolder": "packages/lib"
     }
   ]
 }
