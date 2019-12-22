@@ -16,6 +16,9 @@
     },
     {
       "path": "./packages/lib"
+    },
+    {
+      "path": "./packages/infra"
     }
   ],
   "settings": {
@@ -44,6 +47,6 @@
       "editorGroup.border": "#4fe8b4",
       "tab.activeBorder": "#4fe8b4"
     },
-    "cSpell.words": ["cosmiconfig", "filepath"]
+    "cSpell.words": ["cosmiconfig", "filepath", "promisify"]
   }
 }

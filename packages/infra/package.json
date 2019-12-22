@@ -1,0 +1,22 @@
+{
+  "name": "@sizer/infra",
+  "version": "0.0.1",
+  "description": "infra code to help build packages",
+  "main": "index.js",
+  "author": "orokanasaru",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ncp": "^2.0.3",
+    "@types/node": "^12.12.21",
+    "@types/prompts": "^2.0.3",
+    "@types/yargs": "^13.0.3"
+  },
+  "dependencies": {
+    "@microsoft/node-core-library": "^3.18.0",
+    "@microsoft/rush-lib": "^5.17.2",
+    "ncp": "^2.0.0",
+    "prompts": "^2.3.0",
+    "replace-in-file": "^5.0.2",
+    "yargs": "^15.0.2"
+  }
+}

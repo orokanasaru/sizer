@@ -312,6 +312,10 @@
     //   "reviewCategory": "tools"
     // }
     {
+      "packageName": "@sizer/infra",
+      "projectFolder": "packages/infra"
+    },
+    {
       "packageName": "@sizer/extension",
       "projectFolder": "packages/extension"
     },

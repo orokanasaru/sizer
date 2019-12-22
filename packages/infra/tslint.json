@@ -1,0 +1,91 @@
+{
+  "extends": [
+    "tslint-microsoft-contrib",
+    "tslint:latest",
+    "tslint-config-standard",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "array-type": [true, "array"],
+    "await-promise": [true, "PromiseLike", "Thenable"],
+    "binary-expression-operand-order": true,
+    "completed-docs": false,
+    "cyclomatic-complexity": true,
+    "export-name": false,
+    "file-name-casing": [true, "kebab-case"],
+    "import-name": false,
+    "interface-name": false,
+    "interface-over-type-literal": false,
+    "jsx-no-multiline-js": false,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "public-static-field",
+          "private-static-field",
+          "public-instance-field",
+          "private-instance-field",
+          "public-constructor",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
+    ],
+    "newline-before-return": true,
+    "no-any": true,
+    "no-backbone-get-set-outside-model": false,
+    "no-boolean-literal-compare": true,
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "no-default-export": true,
+    "no-duplicate-case": null,
+    "no-implicit-dependencies": [true, "dev", ["@ms-ows"]],
+    "no-import-side-effect": true,
+    "no-increment-decrement": false,
+    "no-inferrable-types": true,
+    "no-inferred-empty-object-type": true,
+    "no-mergeable-namespace": true,
+    "no-namespace": [true, "allow-declarations"],
+    "no-non-null-assertion": false,
+    "no-null-keyword": false,
+    "no-object-literal-type-assertion": false,
+    "no-octal-literal": true,
+    "no-parameter-reassignment": true,
+    "no-relative-imports": false,
+    "no-require-imports": false,
+    "no-string-based-set-timeout": false,
+    "no-submodule-imports": false,
+    "no-suspicious-comment": false,
+    "no-unnecessary-callback-wrapper": true,
+    "no-unnecessary-class": true,
+    "no-void-expression": false,
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true
+      }
+    ],
+    "prefer-function-over-method": true,
+    "prefer-readonly": true,
+    "prefer-switch": true,
+    "prefer-template": true,
+    "prefer-type-cast": false,
+    "prefer-while": true,
+    "promise-function-async": false,
+    "restrict-plus-operands": true,
+    "strict-boolean-expressions": false,
+    "switch-default": true,
+    "switch-final-break": true,
+    "use-default-type-parameter": true,
+    "use-simple-attributes": false,
+    "valid-typeof": null,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore"
+    ]
+  }
+}
